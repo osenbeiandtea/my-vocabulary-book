@@ -3,27 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Vocabulary Book v1.4.1.1 - Auto Status Fix</title>
+  <title>My Vocabulary Book v1.5.0 — Quiet Editorial (Phase 4 Quiz)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     /* =========================================================
        1. Design Tokens
     ========================================================== */
     :root {
-      --background: #f4e7e1;
-      --card: #ffffff;
-      --primary: #9b8377;
-      --primary-soft: #beaba0;
-      --primary-light: #e3c7bc;
-      --primary-pale: #f1dfd7;
-      --text: #26332a;
-      --muted: #7a847c;
-      --border: #dce4dd;
-      --warning: #d98a45;
-      --learning: #6e9b7b;
-      --success: #4f8a61;
-      --danger: #b86363;
-      --shadow: rgba(83, 59, 49, 0.08);
+      /* Design System v2.0 — Quiet Editorial */
+      --background: #F7F4EF;
+      --surface: #FFFDFC;
+      --primary: #9B8377;
+      --primary-deep: #6E584A;
+      --primary-soft: #DCC8B6;
+      --text: #302A26;
+      --muted: #7A746F;
+      --border: #E6DED6;
+      --success: #6E8B6D;
+      --warning: #B87945;
+      --danger: #A85F58;
+
+      /* Compatibility aliases used by the v1.4.4 UI.
+         These keep Phase 1 visual-only and protect existing behavior. */
+      --card: var(--surface);
+      --primary-light: #E7DAD0;
+      --primary-pale: #F3ECE6;
+      --learning: var(--success);
+      --shadow: rgba(60, 45, 35, 0.04);
+
+      /* Typography */
+      --font-display: "Playfair Display", Georgia, serif;
+      --font-ui: "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+      /* 4px spacing system */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 40px;
+      --space-8: 48px;
+      --space-9: 64px;
+
+      /* Radius */
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-pill: 999px;
     }
 
     /* =========================================================
@@ -38,7 +70,7 @@
       min-width: 320px;
       background: var(--background);
       color: var(--text);
-      font-family: Arial, "Noto Sans JP", sans-serif;
+      font-family: var(--font-ui);
       line-height: 1.6;
     }
 
@@ -57,7 +89,7 @@
       width: min(100%, 560px);
       min-height: 100vh;
       margin: 0 auto;
-      padding: 28px 18px 108px;
+      padding: 28px 18px 108px; /* Phase 2 will migrate page spacing to tokens */
     }
 
     .view {
@@ -82,7 +114,9 @@
 
     .page-title {
       margin: 0;
+      font-family: var(--font-display);
       font-size: clamp(1.8rem, 8vw, 2.15rem);
+      font-weight: 500;
       line-height: 1.25;
       letter-spacing: -0.03em;
     }
@@ -111,10 +145,10 @@
     }
 
     .card {
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 18px;
-      background: var(--card);
-      box-shadow: 0 7px 22px var(--shadow);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      box-shadow: none;
     }
 
     .primary-button,
@@ -122,20 +156,20 @@
     .danger-button {
       width: 100%;
       min-height: 48px;
-      border-radius: 13px;
-      font-weight: 700;
+      border-radius: var(--radius-lg);
+      font-weight: 600;
     }
 
     .primary-button {
-      border: 0;
-      background: var(--primary);
-      color: #fff;
+      border: 1px solid var(--primary-deep);
+      background: var(--primary-deep);
+      color: var(--surface);
     }
 
     .secondary-button {
-      border: 1px solid var(--primary-light);
-      background: #fff;
-      color: var(--primary);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--primary-deep);
     }
 
     .danger-button {
@@ -1027,48 +1061,132 @@
     }
 
     /* =========================================================
-       7. Data View
+       7. Data View — Utility Room (Phase 5)
     ========================================================== */
-    .data-summary {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 20px;
+    #data-view header {
+      margin-bottom: 4px;
     }
 
-    .data-summary-card {
-      padding: 14px;
+    #data-view .page-title {
+      font-family: var(--font-display);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .data-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 24px;
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-summary-item {
+      min-width: 0;
+      padding: 0 12px;
+      text-align: center;
+    }
+
+    .data-summary-item + .data-summary-item {
+      border-left: 1px solid var(--border);
+    }
+
+    .data-summary-icon {
+      display: inline-flex;
+      width: 16px;
+      height: 16px;
+      margin-bottom: 5px;
+      color: var(--primary-deep);
+    }
+
+    .data-summary-icon svg,
+    .data-section-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .data-summary-label {
       margin: 0;
       color: var(--muted);
-      font-size: 0.74rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      white-space: nowrap;
     }
 
     .data-summary-number {
       margin: 3px 0 0;
-      font-size: 1.35rem;
-      font-weight: 700;
+      color: var(--text);
+      font-size: 1.3rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .data-sections {
+      display: grid;
+      gap: 16px;
+      margin-top: 28px;
     }
 
     .data-card {
-      padding: 18px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      box-shadow: none;
     }
 
-    .data-card + .data-card {
-      margin-top: 12px;
+    .data-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-bottom: 14px;
+    }
+
+    .data-section-icon {
+      display: inline-flex;
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      color: var(--primary-deep);
     }
 
     .data-card-title {
       margin: 0;
-      font-size: 1rem;
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 600;
     }
 
     .data-card-description {
-      margin: 6px 0 15px;
+      margin: 5px 0 0;
       color: var(--muted);
       font-size: 0.82rem;
+      line-height: 1.65;
+    }
+
+    .data-card .primary-button,
+    .data-card .secondary-button,
+    .data-card .danger-button {
+      box-shadow: none;
+    }
+
+    .data-export-button {
+      border-color: var(--primary-soft);
+      background: rgba(220, 200, 182, 0.58);
+      color: var(--primary-deep);
+    }
+
+    .data-import-button {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: var(--surface);
     }
 
     .import-options {
@@ -1080,98 +1198,185 @@
     .radio-row {
       display: flex;
       align-items: flex-start;
-      gap: 9px;
-      padding: 10px 12px;
+      gap: 10px;
+      padding: 11px 12px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #fff;
+      border-radius: var(--radius-md);
+      background: transparent;
+    }
+
+    .radio-row:has(input:checked) {
+      border-color: var(--primary-soft);
+      background: rgba(220, 200, 182, 0.18);
     }
 
     .radio-row input {
       margin-top: 4px;
-      accent-color: var(--primary);
+      accent-color: var(--primary-deep);
     }
 
     .radio-title {
       display: block;
+      color: var(--text);
       font-size: 0.84rem;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .radio-help {
       display: block;
-      margin-top: 2px;
+      margin-top: 3px;
       color: var(--muted);
       font-size: 0.72rem;
+      line-height: 1.55;
     }
 
     .file-input {
       width: 100%;
-      padding: 10px;
-      border: 1px dashed var(--primary-light);
-      border-radius: 12px;
-      background: rgba(255,255,255,.7);
+      padding: 12px;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-md);
+      background: var(--background);
+      color: var(--text);
+    }
+
+    .file-input:focus {
+      border-color: var(--primary);
+      outline: 2px solid rgba(155, 131, 119, 0.14);
+      outline-offset: 2px;
     }
 
     .csv-fields {
       margin: 12px 0 0;
-      padding: 11px 12px;
-      border-radius: 12px;
-      background: var(--primary-pale);
+      padding: 10px 0 0;
+      border-top: 1px solid var(--border);
       color: var(--muted);
-      font-size: 0.74rem;
+      font-size: 0.7rem;
+      line-height: 1.55;
       word-break: break-word;
     }
 
+    .data-template-card {
+      background: transparent;
+    }
+
     .danger-zone {
-      border-color: rgba(184, 99, 99, 0.18);
+      border-color: rgba(168, 95, 88, 0.24);
+      background: rgba(255, 253, 252, 0.74);
+    }
+
+    .danger-zone .data-section-icon {
+      color: var(--danger);
+    }
+
+    .danger-zone .danger-button {
+      border-color: rgba(168, 95, 88, 0.34);
+      background: transparent;
+      color: var(--danger);
+    }
+
+    .quiz-retry-button {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: var(--surface);
+      box-shadow: none;
+    }
+
+    @media (max-width: 520px) {
+      .data-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        row-gap: 16px;
+      }
+
+      .data-summary-item:nth-child(3) {
+        border-left: 0;
+      }
+
+      .data-summary-item:nth-child(n + 3) {
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+
+      .data-card {
+        padding: 18px 16px;
+      }
     }
 
 
     /* =========================================================
-       8. Four Choice Quiz
+       8. Quiz — Quiet Desk (Phase 4)
     ========================================================== */
 
+    #quiz-view header {
+      margin-bottom: 6px;
+    }
+
+    #quiz-view .page-title {
+      font-family: var(--font-display);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    #quiz-view .page-message {
+      max-width: 34rem;
+    }
+
     .quiz-mode-tabs {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 20px;
-      padding: 5px;
-      border: 1px solid rgba(227, 199, 188, 0.8);
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.58);
+      display: flex;
+      gap: 22px;
+      margin-top: 22px;
+      border-bottom: 1px solid var(--border);
     }
 
     .quiz-mode-button {
+      position: relative;
       min-height: 42px;
+      padding: 0 1px 11px;
       border: 0;
-      border-radius: 11px;
+      border-radius: 0;
       background: transparent;
       color: var(--muted);
-      font-weight: 700;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .quiz-mode-button::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: transparent;
+      transform: scaleX(0.35);
+      transition: background 150ms ease, transform 150ms ease;
     }
 
     .quiz-mode-button.active {
-      background: var(--primary);
-      color: #fff;
+      color: var(--primary-deep);
+      background: transparent;
     }
 
+    .quiz-mode-button.active::after {
+      background: var(--primary-deep);
+      transform: scaleX(1);
+    }
 
     .smart-review-note {
       display: grid;
-      gap: 3px;
-      margin-bottom: 15px;
-      padding: 11px 13px;
-      border: 1px solid var(--primary-light);
-      border-radius: 12px;
-      background: var(--primary-pale);
-      color: var(--primary);
-      font-size: 0.74rem;
-      line-height: 1.5;
+      gap: 4px;
+      margin-bottom: 24px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.55;
     }
 
     .smart-review-note strong {
+      color: var(--primary-deep);
       font-size: 0.78rem;
     }
 
@@ -1182,52 +1387,70 @@
     .quiz-setup-card,
     .quiz-question-card,
     .quiz-result-card {
-      margin-top: 20px;
-      padding: 20px;
+      margin-top: 26px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .quiz-setting-label {
       display: block;
-      margin-bottom: 9px;
-      font-size: 0.86rem;
-      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
     }
 
     .quiz-target-options {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .quiz-target-button {
-      min-height: 42px;
-      padding: 7px 6px;
+      min-height: 38px;
+      padding: 7px 13px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #fff;
+      border-radius: var(--radius-pill);
+      background: transparent;
       color: var(--muted);
       font-size: 0.76rem;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .quiz-target-button.active {
-      border-color: var(--primary-light);
-      background: var(--primary-pale);
-      color: var(--primary);
+      border-color: transparent;
+      background: var(--primary-soft);
+      color: var(--primary-deep);
     }
 
     .quiz-help {
-      margin: 0 0 17px;
+      margin: 0 0 18px;
       color: var(--muted);
-      font-size: 0.78rem;
+      font-size: 0.79rem;
+      line-height: 1.65;
+    }
+
+    #start-quiz-button {
+      background: var(--surface);
+      color: var(--primary-deep);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    #start-quiz-button:not(:disabled):active {
+      background: var(--primary-deep);
+      color: var(--surface);
     }
 
     .quiz-availability {
       margin: 10px 0 0;
       color: var(--muted);
-      font-size: 0.75rem;
-      text-align: center;
+      font-size: 0.73rem;
+      text-align: left;
     }
 
     .quiz-progress-row {
@@ -1235,104 +1458,119 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 13px;
+      margin-bottom: 9px;
     }
 
     .quiz-progress-text,
     .quiz-score-text {
       color: var(--muted);
-      font-size: 0.76rem;
-      font-weight: 700;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
     .quiz-progress-track {
       overflow: hidden;
-      height: 7px;
-      margin-bottom: 20px;
+      height: 3px;
+      margin-bottom: 34px;
       border-radius: 999px;
-      background: var(--primary-pale);
+      background: var(--border);
     }
 
     .quiz-progress-bar {
       width: 20%;
       height: 100%;
       border-radius: inherit;
-      background: var(--primary);
+      background: var(--primary-deep);
       transition: width 180ms ease;
     }
 
     .quiz-type-badge {
       display: inline-flex;
       align-items: center;
-      min-height: 23px;
-      margin-bottom: 8px;
-      padding: 2px 9px;
-      border-radius: 999px;
-      background: var(--primary-pale);
-      color: var(--primary);
-      font-size: 0.68rem;
-      font-weight: 700;
+      min-height: 22px;
+      margin-bottom: 10px;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.66rem;
+      font-weight: 600;
     }
 
-    .quiz-type-badge.phrase {
-      background: #edf3ee;
-      color: var(--learning);
+    .quiz-type-badge.phrase,
+    .quiz-type-badge.example {
+      background: transparent;
+      color: var(--muted);
     }
 
     .quiz-prompt-label {
       margin: 0;
       color: var(--muted);
-      font-size: 0.76rem;
+      font-size: 0.75rem;
+      line-height: 1.5;
     }
 
     .quiz-word-row {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
-      gap: 13px;
-      margin-top: 5px;
+      gap: 14px;
+      margin-top: 7px;
     }
 
     .quiz-word {
       margin: 0;
-      font-size: clamp(1.45rem, 7vw, 2rem);
-      line-height: 1.35;
+      max-width: 100%;
+      color: var(--text);
+      font-size: clamp(1.45rem, 6.5vw, 2.05rem);
+      font-weight: 600;
+      line-height: 1.42;
+      letter-spacing: -0.015em;
       overflow-wrap: anywhere;
     }
 
     .quiz-choices {
       display: grid;
       gap: 10px;
-      margin-top: 22px;
+      margin-top: 30px;
     }
 
     .quiz-choice {
       width: 100%;
-      min-height: 52px;
-      padding: 11px 14px;
+      min-height: 54px;
+      padding: 12px 15px;
       border: 1px solid var(--border);
-      border-radius: 13px;
-      background: #fff;
+      border-radius: var(--radius-lg);
+      background: var(--surface);
       color: var(--text);
       text-align: left;
-      font-size: 0.86rem;
-      font-weight: 700;
+      font-size: 0.88rem;
+      font-weight: 500;
+      line-height: 1.5;
+      box-shadow: none;
     }
 
-    .quiz-choice:hover:not(:disabled) {
+    .quiz-choice:hover:not(:disabled),
+    .quiz-choice:focus-visible:not(:disabled) {
       border-color: var(--primary-soft);
-      background: #fffdfc;
+      background: rgba(220, 200, 182, 0.13);
+    }
+
+    .quiz-choice:active:not(:disabled) {
+      background: var(--primary-soft);
     }
 
     .quiz-choice.correct {
-      border-color: rgba(79, 138, 97, 0.55);
-      background: #edf6ef;
+      border-color: rgba(110, 139, 109, 0.45);
+      background: rgba(110, 139, 109, 0.10);
       color: var(--success);
     }
 
     .quiz-choice.incorrect {
-      border-color: rgba(184, 99, 99, 0.48);
-      background: #fff1f1;
+      border-color: rgba(168, 95, 88, 0.40);
+      background: rgba(168, 95, 88, 0.08);
       color: var(--danger);
     }
 
@@ -1342,68 +1580,68 @@
 
     .blank-answer-area {
       display: grid;
-      gap: 10px;
-      margin-top: 22px;
+      gap: 11px;
+      margin-top: 30px;
     }
 
     .blank-answer-label {
       color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 700;
+      font-size: 0.76rem;
+      font-weight: 600;
     }
 
     .blank-answer-input {
       width: 100%;
-      min-height: 50px;
+      min-height: 52px;
       padding: 0 14px;
       border: 1px solid var(--border);
-      border-radius: 13px;
-      background: #fff;
+      border-radius: var(--radius-md);
+      background: var(--surface);
       color: var(--text);
       outline: none;
+      box-shadow: none;
     }
 
     .blank-answer-input:focus {
-      border-color: var(--primary-soft);
-      box-shadow: 0 0 0 4px rgba(190, 171, 160, 0.18);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(155, 131, 119, 0.12);
     }
 
     .blank-answer-input.correct {
-      border-color: rgba(79, 138, 97, 0.55);
-      background: #edf6ef;
+      border-color: rgba(110, 139, 109, 0.45);
+      background: rgba(110, 139, 109, 0.08);
     }
 
     .blank-answer-input.incorrect {
-      border-color: rgba(184, 99, 99, 0.48);
-      background: #fff1f1;
+      border-color: rgba(168, 95, 88, 0.40);
+      background: rgba(168, 95, 88, 0.07);
     }
-
 
     .reorder-answer-area {
       display: grid;
-      gap: 14px;
-      margin-top: 22px;
+      gap: 18px;
+      margin-top: 28px;
     }
 
     .reorder-hint {
       margin: 0;
-      padding: 11px 13px;
-      border-radius: 12px;
-      background: var(--primary-pale);
-      color: var(--primary);
-      font-size: 0.8rem;
-      line-height: 1.55;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.80rem;
+      line-height: 1.65;
     }
 
     .reorder-block {
       display: grid;
-      gap: 7px;
+      gap: 8px;
     }
 
     .reorder-label {
       color: var(--muted);
-      font-size: 0.74rem;
-      font-weight: 700;
+      font-size: 0.72rem;
+      font-weight: 600;
     }
 
     .reorder-answer-box,
@@ -1412,86 +1650,131 @@
       flex-wrap: wrap;
       align-content: flex-start;
       gap: 8px;
-      min-height: 76px;
-      padding: 11px;
-      border: 1px dashed var(--primary-light);
-      border-radius: 13px;
-      background: #fff;
+      min-height: 78px;
+      padding: 12px;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-lg);
+      background: rgba(255, 253, 252, 0.45);
     }
 
     .reorder-answer-box {
       border-style: solid;
-      background: #fffdfc;
+      background: var(--surface);
     }
 
     .reorder-token {
       min-height: 36px;
       padding: 6px 11px;
-      border: 1px solid var(--primary-light);
-      border-radius: 10px;
-      background: var(--primary-pale);
-      color: var(--primary);
-      font-size: 0.8rem;
-      font-weight: 700;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--primary-deep);
+      font-size: 0.80rem;
+      font-weight: 600;
+      box-shadow: none;
     }
 
     .reorder-token.answer-token {
-      background: #fff;
+      border-color: var(--primary-soft);
+      background: rgba(220, 200, 182, 0.20);
     }
 
     .reorder-answer-box.correct {
-      border-color: rgba(79, 138, 97, 0.55);
-      background: #edf6ef;
+      border-color: rgba(110, 139, 109, 0.45);
+      background: rgba(110, 139, 109, 0.08);
     }
 
     .reorder-answer-box.incorrect {
-      border-color: rgba(184, 99, 99, 0.48);
-      background: #fff1f1;
+      border-color: rgba(168, 95, 88, 0.40);
+      background: rgba(168, 95, 88, 0.07);
     }
 
     .quiz-feedback {
-      min-height: 48px;
-      margin-top: 15px;
+      min-height: 0;
+      margin-top: 18px;
       padding: 11px 13px;
-      border-radius: 12px;
-      background: var(--primary-pale);
-      color: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      color: var(--primary-deep);
       font-size: 0.82rem;
-      font-weight: 700;
+      font-weight: 600;
+      line-height: 1.5;
     }
 
     .quiz-feedback.correct {
-      background: #edf6ef;
+      border-color: rgba(110, 139, 109, 0.35);
+      background: rgba(110, 139, 109, 0.08);
       color: var(--success);
     }
 
     .quiz-feedback.incorrect {
-      background: #fff1f1;
+      border-color: rgba(168, 95, 88, 0.32);
+      background: rgba(168, 95, 88, 0.07);
       color: var(--danger);
     }
 
+    /* Quiz CTA — Quiet Desk / Visual Strength Revision
+       Normal = Quiet, Interaction = Warm, Feedback = Semantic */
+    .quiz-check-button {
+      width: calc(100% - 16px);
+      min-height: 48px;
+      margin: 14px auto 0;
+      border: 1px solid var(--border);
+      background: var(--primary-soft);
+      color: var(--primary-deep);
+      box-shadow: none;
+    }
+
+    .quiz-check-button:not(:disabled):active {
+      border-color: rgba(110, 88, 74, 0.22);
+      background: rgba(220, 200, 182, 0.78);
+    }
+
     .quiz-next-button {
-      margin-top: 13px;
+      width: calc(100% - 16px);
+      min-height: 48px;
+      margin: 14px auto 0;
+      border-color: var(--primary);
+      background: var(--primary);
+      color: var(--surface);
+      box-shadow: none;
+    }
+
+    .quiz-next-button:not(:disabled):active {
+      border-color: var(--primary-deep);
+      background: var(--primary-deep);
+    }
+
+    .quiz-result-card {
+      padding-top: 18px;
+      text-align: center;
     }
 
     .quiz-result-score {
-      margin: 6px 0 0;
-      font-size: 2.2rem;
-      font-weight: 700;
-      line-height: 1.2;
+      margin: 8px 0 0;
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 13vw, 4.1rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--primary-deep);
       text-align: center;
     }
 
     .quiz-result-message {
-      margin: 10px 0 20px;
+      margin: 12px auto 26px;
+      max-width: 28rem;
       color: var(--muted);
       font-size: 0.88rem;
+      line-height: 1.65;
       text-align: center;
     }
 
     .quiz-result-actions {
       display: grid;
       gap: 10px;
+      max-width: 28rem;
+      margin: 0 auto;
     }
 
     .quiz-hidden,
@@ -1515,10 +1798,10 @@
       place-items: center;
       border: 0;
       border-radius: 50%;
-      background: var(--primary);
-      color: #fff;
+      background: var(--primary-deep);
+      color: var(--surface);
       font-size: 1.65rem;
-      box-shadow: 0 10px 24px rgba(94,72,61,.25);
+      box-shadow: 0 2px 8px rgba(60, 45, 35, 0.08);
     }
 
     .floating-add-button.show {
@@ -1531,10 +1814,12 @@
       bottom: 0;
       left: 0;
       z-index: 15;
-      padding: 9px 12px;
-      border-top: 1px solid rgba(227,199,188,.7);
-      background: rgba(255,255,255,.91);
+      padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(230, 222, 214, 0.78);
+      background: rgba(255, 253, 252, 0.94);
+      box-shadow: 0 -2px 8px rgba(60, 45, 35, 0.04);
       backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
 
     .bottom-nav {
@@ -1542,29 +1827,46 @@
       width: min(100%,560px);
       margin: 0 auto;
       grid-template-columns: repeat(4,1fr);
+      gap: var(--space-1);
     }
 
     .nav-item {
       display: flex;
-      min-height: 57px;
+      min-height: 56px;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 2px;
+      gap: var(--space-1);
       border: 0;
-      border-radius: 13px;
+      border-radius: var(--radius-lg);
       background: transparent;
       color: var(--muted);
+      transition: background-color 140ms ease, color 140ms ease, transform 100ms ease;
+    }
+
+    .nav-item:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .nav-item:active {
+      transform: translateY(1px);
     }
 
     .nav-item.active {
-      background: var(--primary-pale);
-      color: var(--primary);
+      background: color-mix(in srgb, var(--primary-soft) 38%, transparent);
+      color: var(--primary-deep);
+    }
+
+    .nav-item > span:first-child {
+      font-size: 1.02rem;
+      line-height: 1;
     }
 
     .nav-label {
-      font-size: 0.66rem;
-      font-weight: 700;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
     }
 
     .toast {
@@ -1591,6 +1893,623 @@
       opacity: 1;
       transform: translateY(0);
     }
+  
+
+    /* =========================================================
+       v1.5.0 Phase 2 — Home / Quiet Dashboard
+       Display-layer only. Existing review calculations are preserved.
+    ========================================================== */
+    .quiet-home-header {
+      margin-top: var(--space-3);
+      padding-top: var(--space-2);
+    }
+
+    .home-greeting {
+      margin: 2px 0 0;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2rem, 7vw, 2.55rem);
+      font-weight: 500;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+
+    .home-review-hero {
+      margin-top: var(--space-8);
+      padding: 0 2px;
+    }
+
+    .home-kicker,
+    .home-section-heading h2 {
+      margin: 0;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+
+    .home-review-number-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-2);
+      margin-top: var(--space-2);
+    }
+
+    .home-review-number {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(3.5rem, 16vw, 4rem);
+      font-weight: 400;
+      line-height: 0.98;
+      letter-spacing: -0.045em;
+      color: var(--text);
+    }
+
+    .home-review-unit {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .home-review-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .home-review-meta strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .home-meta-divider {
+      width: 1px;
+      height: 12px;
+      background: var(--border);
+    }
+
+    .home-review-empty {
+      min-height: 1em;
+      margin: var(--space-2) 0 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .home-review-cta {
+      width: 100%;
+      min-height: 54px;
+      margin-top: var(--space-5);
+      padding: 0 var(--space-4);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: var(--space-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: color-mix(in srgb, var(--primary-soft) 34%, var(--surface));
+      color: var(--primary-deep);
+      font: inherit;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+    }
+
+    .home-review-cta:hover,
+    .home-review-cta:focus-visible {
+      border-color: var(--primary);
+    }
+
+    .home-review-cta:active {
+      background: var(--primary-deep);
+      color: var(--surface);
+      transform: translateY(1px);
+    }
+
+    .home-review-cta:disabled {
+      opacity: .48;
+      cursor: default;
+    }
+
+    .home-review-cta-icon {
+      font-size: 1.05rem;
+    }
+
+    .home-review-cta-arrow {
+      font-size: 1rem;
+    }
+
+    .home-section {
+      margin-top: var(--space-8);
+    }
+
+    .home-section-heading {
+      margin-bottom: var(--space-4);
+    }
+
+    .home-heading-with-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+
+    .home-text-action {
+      padding: 4px 0;
+      border: 0;
+      background: transparent;
+      color: var(--primary-deep);
+      font: inherit;
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .home-text-action:disabled {
+      color: var(--muted);
+      opacity: .5;
+      cursor: default;
+    }
+
+    .home-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .home-summary-item {
+      position: relative;
+      padding: var(--space-4) var(--space-2);
+      text-align: center;
+    }
+
+    .home-summary-item + .home-summary-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 22%;
+      width: 1px;
+      height: 56%;
+      background: var(--border);
+    }
+
+    .home-summary-item strong {
+      display: block;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 500;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    .home-summary-item span {
+      display: block;
+      margin-top: 5px;
+      font-size: .67rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .home-deadline-surface {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      align-items: center;
+      gap: var(--space-5);
+      padding: var(--space-4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+    }
+
+    .home-deadline-label,
+    .home-deadline-number,
+    .home-deadline-note {
+      margin: 0;
+    }
+
+    .home-deadline-label {
+      font-size: .72rem;
+      color: var(--muted);
+    }
+
+    .home-deadline-number {
+      margin-top: 2px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 1.4rem;
+      color: var(--text);
+    }
+
+    .home-deadline-note {
+      font-size: .78rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .home-secondary-section {
+      margin-top: var(--space-7);
+    }
+
+    .home-inline-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .home-inline-stats > span {
+      padding: var(--space-3) var(--space-2);
+      text-align: center;
+    }
+
+    .home-inline-stats strong,
+    .home-inline-stats small {
+      display: block;
+    }
+
+    .home-inline-stats strong {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .home-inline-stats small {
+      margin-top: 3px;
+      font-size: .65rem;
+      color: var(--muted);
+    }
+
+    .quiet-dashboard-list .dashboard-item {
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .quiet-recent-list .word-card {
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+      border-top: 0;
+      background: transparent;
+      box-shadow: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    @media (max-width: 430px) {
+      .home-review-hero {
+        margin-top: var(--space-7);
+      }
+
+      .home-summary-item {
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+
+      .home-summary-item strong {
+        font-size: 1.35rem;
+      }
+
+      .home-summary-item span {
+        font-size: .61rem;
+        letter-spacing: -0.01em;
+      }
+
+      .home-deadline-surface {
+        grid-template-columns: auto 1fr;
+        gap: var(--space-2);
+      }
+    }
+
+  
+    /* =========================================================
+       v1.5.0 Phase 3 — Personal Dictionary / Words
+    ========================================================== */
+    #words-view header {
+      margin-bottom: var(--space-6);
+    }
+
+    #words-view .tabs {
+      gap: var(--space-5);
+      padding: 0;
+      margin-bottom: var(--space-5);
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      overflow-x: auto;
+    }
+
+    #words-view .tab-button {
+      flex: 0 0 auto;
+      padding: 8px 0 10px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    #words-view .tab-button.active {
+      background: transparent;
+      color: var(--primary-deep);
+      border-bottom-color: var(--primary-deep);
+    }
+
+    #words-view .search-wrap {
+      margin-bottom: var(--space-4);
+    }
+
+    #words-view .search-input {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: none;
+    }
+
+    #words-view .section-heading {
+      margin-top: var(--space-6);
+      margin-bottom: var(--space-2);
+      align-items: baseline;
+    }
+
+    #words-view .word-list,
+    #words-view .example-list {
+      display: block;
+      gap: 0;
+    }
+
+    .dictionary-row {
+      position: relative;
+      padding: var(--space-5) 2px;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .dictionary-row:first-child {
+      border-top: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    }
+
+    .dictionary-row:hover {
+      background: rgba(255, 253, 252, 0.48);
+    }
+
+    .dictionary-row-kicker {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .dictionary-type {
+      color: var(--primary-deep);
+    }
+
+    .dictionary-category::before {
+      content: "·";
+      margin-right: var(--space-2);
+      color: var(--border);
+    }
+
+    .dictionary-title-line {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+
+    .dictionary-word,
+    .example-dictionary-row .example-english {
+      margin: 0;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.55;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .dictionary-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 2px;
+      margin-top: -4px;
+    }
+
+    .dictionary-row .audio-button,
+    .dictionary-row .favorite-button {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .dictionary-meaning,
+    .example-dictionary-row .example-japanese {
+      margin: var(--space-1) 0 0;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .dictionary-example {
+      margin: var(--space-3) 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .dictionary-example-ja {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    /* Functional Warmth — shared line icon language */
+    .line-icon {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      flex: 0 0 auto;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vertical-align: -0.12em;
+    }
+
+    .home-review-cta-icon .line-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .home-summary-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 18px;
+      margin-bottom: 6px;
+      color: var(--primary-deep);
+    }
+
+    .home-summary-icon .line-icon {
+      width: 15px;
+      height: 15px;
+    }
+
+    .home-summary-icon.growth {
+      color: var(--success);
+    }
+
+    .home-deadline-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--primary-deep);
+      align-self: center;
+    }
+
+    .home-deadline-icon.attention {
+      color: var(--warning);
+    }
+
+    .dictionary-actions button {
+      color: var(--primary-deep);
+    }
+
+    .dictionary-actions .favorite-button {
+      color: var(--muted);
+    }
+
+    .dictionary-actions .favorite-button.active {
+      color: var(--primary-deep);
+    }
+
+    .dictionary-actions .line-icon {
+      width: 17px;
+      height: 17px;
+    }
+
+    .dictionary-edit-button {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      box-shadow: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+
+    .dictionary-edit-button:hover,
+    .dictionary-edit-button:focus-visible,
+    .dictionary-row .audio-button:hover,
+    .dictionary-row .audio-button:focus-visible,
+    .dictionary-row .favorite-button:hover,
+    .dictionary-row .favorite-button:focus-visible {
+      background: color-mix(in srgb, var(--primary-soft) 24%, transparent);
+      color: var(--primary-deep);
+    }
+
+    .dictionary-status .line-icon {
+      width: 14px;
+      height: 14px;
+      color: var(--muted);
+    }
+
+    .dictionary-status.status-learning .line-icon {
+      color: var(--primary-deep);
+    }
+
+    .dictionary-status.status-learned .line-icon {
+      color: var(--success);
+    }
+
+    .dictionary-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: var(--space-3);
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .example-dictionary-row .related-label {
+      display: block;
+      margin-top: var(--space-3);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    #form-view .form-card {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #form-view .type-options {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    #form-view .type-option {
+      border-radius: var(--radius-pill);
+    }
+
+    #form-view .type-option.active {
+      background: var(--primary-soft);
+      color: var(--primary-deep);
+      border-color: var(--primary-soft);
+    }
+
+    @media (max-width: 560px) {
+      #words-view .tabs { gap: var(--space-4); }
+      .dictionary-row { padding: 20px 0; }
+      .dictionary-word,
+      .example-dictionary-row .example-english { font-size: 17px; }
+      .dictionary-title-line { gap: var(--space-2); }
+    }
+
   </style>
 </head>
 
@@ -1601,140 +2520,104 @@
          HOME VIEW
     ====================================================== -->
     <section class="view active" id="home-view">
-      <header>
+      <header class="home-header quiet-home-header">
         <p class="eyebrow">My Vocabulary Book</p>
-        <h1 class="page-title" id="greeting">Good evening, Mai 🌿</h1>
-        <p class="page-message">今日も少しずつ積み上げよう</p>
+        <h1 class="page-title home-greeting" id="greeting">Good evening, Mai</h1>
+        <p class="page-message">今日も、静かに少しずつ。</p>
       </header>
 
-      <article class="card review-card">
-        <p class="review-label">今日の復習</p>
-        <div class="review-count">
-          <strong class="review-number" id="review-count">0</strong>
-          <span class="review-unit">items</span>
+      <section class="home-review-hero" aria-labelledby="today-review-title">
+        <p class="home-kicker" id="today-review-title">TODAY'S REVIEW</p>
+        <div class="home-review-number-row">
+          <strong class="home-review-number" id="review-count">0</strong>
+          <span class="home-review-unit">items</span>
         </div>
-
-        <div class="review-breakdown">
-          <span class="status-chip">
-            <span class="dot unlearned"></span>
-            未学習優先 <span id="unlearned-count">0</span>
-          </span>
-
-          <span class="status-chip">
-            <span class="dot learning"></span>
-            苦手・再確認 <span id="learning-count">0</span>
-          </span>
+        <div class="home-review-meta" aria-label="復習内訳">
+          <span>Priority <strong id="unlearned-count">0</strong></span>
+          <span class="home-meta-divider" aria-hidden="true"></span>
+          <span>Review again <strong id="learning-count">0</strong></span>
         </div>
-
-        <button class="primary-button" id="review-button" type="button">
-          おすすめ復習を始める
-        </button>
-
-        <p class="review-label" id="review-empty-note"></p>
-      </article>
-
-      <section class="section">
-        <div class="section-heading">
-          <h2 class="section-title">学習状況</h2>
-        </div>
-
-        <div class="stats-grid">
-          <article class="card stat-card">
-            <p class="stat-label">登録項目</p>
-            <p class="stat-number" id="total-count">0</p>
-          </article>
-
-          <article class="card stat-card">
-            <p class="stat-label">学習済み</p>
-            <p class="stat-number" id="learned-count">0</p>
-          </article>
-
-          <article class="card stat-card">
-            <p class="stat-label">例文数</p>
-            <p class="stat-number" id="example-count">0</p>
-          </article>
-
-          <article class="card stat-card">
-            <p class="stat-label">お気に入り</p>
-            <p class="stat-number" id="favorite-count">0</p>
-          </article>
-        </div>
+        <p class="home-review-empty" id="review-empty-note"></p>
       </section>
 
-      <section class="section">
-        <div class="section-heading">
-          <h2 class="section-title">今日の復習期限</h2>
-        </div>
+      <button class="home-review-cta" id="review-button" type="button">
+        <span class="home-review-cta-icon" aria-hidden="true">
+          <svg class="line-icon" viewBox="0 0 24 24"><path d="M3.5 6.5c2.7-1.4 5.6-1.3 8.5.2v11.1c-2.9-1.5-5.8-1.6-8.5-.2z"></path><path d="M20.5 6.5c-2.7-1.4-5.6-1.3-8.5.2v11.1c2.9-1.5 5.8-1.6 8.5-.2z"></path></svg>
+        </span>
+        <span>Start Reviewing</span>
+        <span class="home-review-cta-arrow" aria-hidden="true">→</span>
+      </button>
 
-        <article class="card due-review-card">
-          <div class="due-review-main">
-            <p class="due-review-label">今日までに復習する項目</p>
-            <p class="due-review-number">
-              <span id="due-review-count">0</span> items
-            </p>
-            <p class="due-review-note" id="due-review-note">
-              復習期限の項目はありません。
-            </p>
+      <section class="home-section home-summary-section" aria-labelledby="study-summary-title">
+        <div class="home-section-heading">
+          <h2 id="study-summary-title">STUDY SUMMARY</h2>
+        </div>
+        <div class="home-summary-grid">
+          <div class="home-summary-item">
+            <span class="home-summary-icon" aria-hidden="true"><svg class="line-icon" viewBox="0 0 24 24"><path d="M4 5.5c2.7-1.3 5.3-1.2 8 .4v12c-2.7-1.6-5.3-1.7-8-.4z"></path><path d="M20 5.5c-2.7-1.3-5.3-1.2-8 .4v12c2.7-1.6 5.3-1.7 8-.4z"></path></svg></span>
+            <strong id="total-count">0</strong>
+            <span>Registered</span>
           </div>
-
-          <button
-            class="secondary-button"
-            id="due-review-button"
-            type="button"
-          >
-            期限分を復習
-          </button>
-        </article>
-      </section>
-
-      <section class="section">
-        <div class="section-heading">
-          <h2 class="section-title">今日の学習</h2>
-        </div>
-
-        <div class="today-learning-grid">
-          <article class="card today-learning-card">
-            <p class="today-learning-label">回答数</p>
-            <p class="today-learning-number" id="today-answer-count">0</p>
-          </article>
-
-          <article class="card today-learning-card">
-            <p class="today-learning-label">正解数</p>
-            <p class="today-learning-number" id="today-correct-count">0</p>
-          </article>
-
-          <article class="card today-learning-card">
-            <p class="today-learning-label">正答率</p>
-            <p class="today-learning-number" id="today-accuracy">—</p>
-          </article>
+          <div class="home-summary-item">
+            <span class="home-summary-icon growth" aria-hidden="true"><svg class="line-icon" viewBox="0 0 24 24"><path d="M12 20v-8"></path><path d="M12 13c-4 0-6.2-2.3-6.5-6 4.3-.1 6.4 2 6.5 6z"></path><path d="M12 16c4 0 6.2-2.3 6.5-6-4.3-.1-6.4 2-6.5 6z"></path></svg></span>
+            <strong id="learned-count">0</strong>
+            <span>Learned</span>
+          </div>
+          <div class="home-summary-item">
+            <span class="home-summary-icon" aria-hidden="true"><svg class="line-icon" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9z"></path></svg></span>
+            <strong id="favorite-count">0</strong>
+            <span>Favorites</span>
+          </div>
+          <div class="home-summary-item">
+            <span class="home-summary-icon" aria-hidden="true"><svg class="line-icon" viewBox="0 0 24 24"><path d="M5 5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H10l-5 4v-4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"></path><path d="M8 9h8"></path><path d="M8 12h5"></path></svg></span>
+            <strong id="example-count">0</strong>
+            <span>Examples</span>
+          </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="section-heading">
-          <h2 class="section-title">最近学習した項目</h2>
+      <section class="home-section" aria-labelledby="review-deadline-title">
+        <div class="home-section-heading home-heading-with-action">
+          <h2 id="review-deadline-title">REVIEW DEADLINE</h2>
+          <button class="home-text-action" id="due-review-button" type="button">Review →</button>
         </div>
-
-        <div class="dashboard-list" id="recently-studied-list"></div>
+        <div class="home-deadline-surface">
+          <svg class="line-icon home-deadline-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"></rect><path d="M7.5 3v4"></path><path d="M16.5 3v4"></path><path d="M3.5 9h17"></path></svg>
+          <div>
+            <p class="home-deadline-label">Due today</p>
+            <p class="home-deadline-number"><span id="due-review-count">0</span> items</p>
+          </div>
+          <p class="home-deadline-note" id="due-review-note">復習期限の項目はありません。</p>
+        </div>
       </section>
 
-      <section class="section">
-        <div class="section-heading">
-          <h2 class="section-title">苦手な項目</h2>
+      <section class="home-section home-secondary-section" aria-labelledby="today-learning-title">
+        <div class="home-section-heading">
+          <h2 id="today-learning-title">TODAY</h2>
         </div>
-
-        <div class="dashboard-list" id="weak-items-list"></div>
+        <div class="home-inline-stats">
+          <span><strong id="today-answer-count">0</strong><small>Answers</small></span>
+          <span><strong id="today-correct-count">0</strong><small>Correct</small></span>
+          <span><strong id="today-accuracy">—</strong><small>Accuracy</small></span>
+        </div>
       </section>
 
-      <section class="section">
-        <div class="section-heading">
-          <h2 class="section-title">最近追加した単語とフレーズ</h2>
-          <button class="text-button" type="button" data-go-view="words">
-            すべて見る
-          </button>
-        </div>
+      <section class="home-section home-secondary-section">
+        <div class="home-section-heading"><h2>RECENTLY STUDIED</h2></div>
+        <div class="dashboard-list quiet-dashboard-list" id="recently-studied-list"></div>
+      </section>
 
-        <div class="word-list" id="recent-list"></div>
+      <section class="home-section home-secondary-section">
+        <div class="home-section-heading"><h2>NEEDS REVIEW</h2></div>
+        <div class="dashboard-list quiet-dashboard-list" id="weak-items-list"></div>
+      </section>
+
+      <section class="home-section home-secondary-section">
+        <div class="home-section-heading home-heading-with-action">
+          <h2>RECENTLY ADDED</h2>
+          <button class="home-text-action" type="button" data-go-view="words">View all →</button>
+        </div>
+        <div class="word-list quiet-recent-list" id="recent-list"></div>
       </section>
     </section>
 
@@ -1744,8 +2627,8 @@
     <section class="view" id="words-view">
       <header>
         <p class="eyebrow">My Vocabulary Book</p>
-        <h1 class="page-title">Words 🌿</h1>
-        <p class="page-message">単語とフレーズを整理しよう</p>
+        <h1 class="page-title">Words</h1>
+        <p class="page-message">自分だけの言葉と例文を育てよう</p>
       </header>
 
       <div class="tabs" aria-label="表示する種類">
@@ -1771,7 +2654,7 @@
           class="search-input"
           id="search-input"
           type="text"
-          placeholder="単語・フレーズを検索"
+          placeholder="単語・フレーズ・例文を検索"
           autocomplete="off"
         />
         <button class="clear-search" id="clear-search" type="button">×</button>
@@ -1781,7 +2664,7 @@
 
       <section class="section">
         <div class="section-heading">
-          <h2 class="section-title" id="list-section-title">単語・フレーズ一覧</h2>
+          <h2 class="section-title" id="list-section-title">登録項目</h2>
           <span class="nav-label" id="result-count">0 words</span>
         </div>
 
@@ -1825,6 +2708,14 @@
               >
                 フレーズ
               </button>
+
+              <button
+                class="type-option"
+                type="button"
+                data-form-type="example"
+              >
+                例文
+              </button>
             </div>
           </div>
 
@@ -1846,7 +2737,7 @@
             <input class="text-input" id="japanese-input" type="text" />
           </div>
 
-          <div class="form-group">
+          <div class="form-group" id="attached-example-group">
             <label class="field-label" id="example-field-label" for="example-input">
               英語の例文 <span class="optional">任意</span>
             </label>
@@ -1857,7 +2748,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" id="attached-example-japanese-group">
             <label class="field-label" id="example-japanese-field-label" for="example-japanese-input">
               例文の日本語訳 <span class="optional">任意</span>
             </label>
@@ -1980,8 +2871,8 @@
     <section class="view" id="quiz-view">
       <header>
         <p class="eyebrow">My Vocabulary Book</p>
-        <h1 class="page-title">Quiz 🌿</h1>
-        <p class="page-message">4択・穴埋め・並べ替えで単語・フレーズを復習しよう</p>
+        <h1 class="page-title">Quiz</h1>
+        <p class="page-message">静かに、5問ずつ。覚えた言葉を確かめよう。</p>
       </header>
 
       <div class="quiz-mode-tabs" aria-label="Quizの種類">
@@ -2036,7 +2927,7 @@
         </div>
 
         <p class="quiz-help">
-          <span id="quiz-help-text">英語を見て、日本語の意味を4つの選択肢から選びます。1回5問です。</span>
+          <span id="quiz-help-text">英語を見て、日本語の意味を4つの選択肢から選びます。最大5問、同じ問題は重複しません。</span>
         </p>
 
         <button
@@ -2132,7 +3023,7 @@
           />
 
           <button
-            class="primary-button"
+            class="primary-button quiz-check-button"
             id="check-blank-answer-button"
             type="button"
           >
@@ -2168,7 +3059,7 @@
           </div>
 
           <button
-            class="primary-button"
+            class="primary-button quiz-check-button"
             id="check-reorder-answer-button"
             type="button"
           >
@@ -2214,7 +3105,7 @@
 
         <div class="quiz-result-actions">
           <button
-            class="primary-button"
+            class="primary-button quiz-retry-button"
             id="retry-quiz-button"
             type="button"
           >
@@ -2234,53 +3125,67 @@
 
 
     <!-- =====================================================
-         DATA VIEW
+         DATA VIEW — Utility Room
     ====================================================== -->
     <section class="view" id="data-view">
       <header>
         <p class="eyebrow">My Vocabulary Book</p>
-        <h1 class="page-title">Data 🌿</h1>
-        <p class="page-message">単語データのバックアップと復元</p>
+        <h1 class="page-title">Data</h1>
+        <p class="page-message">語彙データを安全に管理・バックアップします。</p>
       </header>
 
-      <div class="data-summary">
-        <article class="card data-summary-card">
-          <p class="data-summary-label">単語</p>
+      <div class="data-summary" aria-label="データ概要">
+        <div class="data-summary-item">
+          <span class="data-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z"></path><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"></path></svg></span>
           <p class="data-summary-number" id="data-word-count">0</p>
-        </article>
+          <p class="data-summary-label">単語</p>
+        </div>
 
-        <article class="card data-summary-card">
-          <p class="data-summary-label">フレーズ</p>
+        <div class="data-summary-item">
+          <span class="data-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 6h14"></path><path d="M5 10h10"></path><path d="M5 14h14"></path><path d="M5 18h8"></path></svg></span>
           <p class="data-summary-number" id="data-phrase-count">0</p>
-        </article>
+          <p class="data-summary-label">フレーズ</p>
+        </div>
 
-        <article class="card data-summary-card">
-          <p class="data-summary-label">例文あり</p>
+        <div class="data-summary-item">
+          <span class="data-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5h14v11H9l-4 3z"></path><path d="M8 9h8"></path><path d="M8 12h5"></path></svg></span>
           <p class="data-summary-number" id="data-example-count">0</p>
-        </article>
+          <p class="data-summary-label">例文</p>
+        </div>
 
-        <article class="card data-summary-card">
-          <p class="data-summary-label">回答数</p>
+        <div class="data-summary-item">
+          <span class="data-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><path d="m8.5 12 2.2 2.3 4.8-5"></path></svg></span>
           <p class="data-summary-number" id="data-answer-count">0</p>
-        </article>
+          <p class="data-summary-label">回答数</p>
+        </div>
       </div>
 
-      <section class="section">
-        <article class="card data-card">
-          <h2 class="data-card-title">CSVを書き出す</h2>
-          <p class="data-card-description">
-            現在の単語・フレーズデータをCSVファイルとして保存します。バックアップに使えます。
-          </p>
-          <button class="primary-button" id="export-csv-button" type="button">
+      <section class="data-sections">
+        <article class="data-card">
+          <div class="data-card-header">
+            <span class="data-section-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m8 10 4 4 4-4"></path><path d="M5 18v2h14v-2"></path></svg></span>
+            <div>
+              <h2 class="data-card-title">バックアップを書き出す</h2>
+              <p class="data-card-description">
+                現在の単語・フレーズ・例文と学習情報をCSVファイルとして保存します。
+              </p>
+            </div>
+          </div>
+          <button class="primary-button data-export-button" id="export-csv-button" type="button">
             CSVを書き出す
           </button>
         </article>
 
-        <article class="card data-card">
-          <h2 class="data-card-title">CSVを読み込む</h2>
-          <p class="data-card-description">
-            CSVファイルから単語とフレーズを復元します。同じ種類・同じ英語表現は読み込んだ内容で更新されます。
-          </p>
+        <article class="data-card">
+          <div class="data-card-header">
+            <span class="data-section-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21V10"></path><path d="m8 14 4-4 4 4"></path><path d="M5 6V4h14v2"></path></svg></span>
+            <div>
+              <h2 class="data-card-title">CSVから復元する</h2>
+              <p class="data-card-description">
+                CSVファイルから単語・フレーズ・例文を読み込みます。追加または置き換えを選択できます。
+              </p>
+            </div>
+          </div>
 
           <input
             class="file-input"
@@ -2294,7 +3199,7 @@
               <input type="radio" name="import-mode" value="add" checked />
               <span>
                 <span class="radio-title">現在のデータに追加</span>
-                <span class="radio-help">既存データを残し、CSVの単語を追加・更新します。</span>
+                <span class="radio-help">既存データを残し、同じ種類・同じ英語表現はCSVの内容で更新します。</span>
               </span>
             </label>
 
@@ -2302,12 +3207,12 @@
               <input type="radio" name="import-mode" value="replace" />
               <span>
                 <span class="radio-title">現在のデータを置き換える</span>
-                <span class="radio-help">現在の単語とフレーズを削除してからCSVを読み込みます。</span>
+                <span class="radio-help">現在の単語・フレーズ・独立例文を削除してからCSVを読み込みます。</span>
               </span>
             </label>
           </div>
 
-          <button class="secondary-button" id="import-csv-button" type="button">
+          <button class="primary-button data-import-button" id="import-csv-button" type="button">
             選択したCSVを読み込む
           </button>
 
@@ -2316,23 +3221,33 @@
           </p>
         </article>
 
-        <article class="card data-card">
-          <h2 class="data-card-title">CSVテンプレート</h2>
-          <p class="data-card-description">
-            入力例が入ったCSVテンプレートを保存できます。
-          </p>
+        <article class="data-card data-template-card">
+          <div class="data-card-header">
+            <span class="data-section-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v5h5"></path><path d="M9 13h6"></path><path d="M9 16h4"></path></svg></span>
+            <div>
+              <h2 class="data-card-title">CSVテンプレート</h2>
+              <p class="data-card-description">
+                新しいデータをまとめて作成するときに使える入力例付きテンプレートです。
+              </p>
+            </div>
+          </div>
           <button class="secondary-button" id="template-button" type="button">
             テンプレートを保存
           </button>
         </article>
 
-        <article class="card data-card danger-zone">
-          <h2 class="data-card-title">登録データをすべて削除</h2>
-          <p class="data-card-description">
-            localStorageに保存されている単語とフレーズをすべて削除します。この操作は元に戻せません。
-          </p>
+        <article class="data-card danger-zone">
+          <div class="data-card-header">
+            <span class="data-section-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16"></path><path d="M9 7V4h6v3"></path><path d="m7 7 1 13h8l1-13"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg></span>
+            <div>
+              <h2 class="data-card-title">登録データをすべて削除</h2>
+              <p class="data-card-description">
+                localStorageに保存されている単語・フレーズ・独立例文をすべて削除します。この操作は元に戻せません。
+              </p>
+            </div>
+          </div>
           <button class="danger-button" id="clear-all-button" type="button">
-            すべての単語とフレーズを削除
+            すべての登録データを削除
           </button>
         </article>
       </section>
@@ -2453,7 +3368,7 @@
         if (Array.isArray(saved)) {
           return saved.map((item) => ({
             ...item,
-            type: item.type === "phrase" ? "phrase" : "word",
+            type: ["word", "phrase", "example"].includes(item.type) ? item.type : "word",
             correctCount: Number(item.correctCount) || 0,
             incorrectCount: Number(item.incorrectCount) || 0,
             lastStudiedAt: item.lastStudiedAt || "",
@@ -2786,92 +3701,105 @@
       return "learned";
     }
 
-    function wordCardHTML(item, compact = false) {
-      return `
-        <article class="card word-card" data-card-id="${escapeHTML(item.id)}">
-          <div>
-            <span class="type-badge ${item.type === "phrase" ? "phrase" : ""}">
-              ${item.type === "phrase" ? "フレーズ" : "単語"}
-            </span>
+    function itemTypeLabel(type) {
+      if (type === "phrase") return "フレーズ";
+      if (type === "example") return "例文";
+      return "単語";
+    }
 
-            <div class="word-title-row">
-              <h3 class="word-title">${escapeHTML(item.word)}</h3>
-              <button
-                class="favorite-button ${item.favorite ? "active" : ""}"
-                type="button"
-                data-favorite-id="${escapeHTML(item.id)}"
-              >
-                ${item.favorite ? "★" : "☆"}
-              </button>
+    function lineIconSVG(name, className = "line-icon") {
+      const icons = {
+        volume: '<svg class="' + className + '" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 10v4h4l5 4V6l-5 4z"></path><path d="M17 9c1.2 1.7 1.2 4.3 0 6"></path><path d="M19.5 6.5c2.8 3.2 2.8 7.8 0 11"></path></svg>',
+        star: '<svg class="' + className + '" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9z"></path></svg>',
+        edit: '<svg class="' + className + '" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4l10.5-10.5-4-4L4 16z"></path><path d="m13.5 6.5 4 4"></path></svg>',
+        circle: '<svg class="' + className + '" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle></svg>',
+        progress: '<svg class="' + className + '" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 1-7.4 5"></path><path d="M4 4v5h5"></path></svg>',
+        check: '<svg class="' + className + '" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="m8.5 12 2.2 2.3 4.8-5"></path></svg>'
+      };
+      return icons[name] || icons.circle;
+    }
+
+    function statusIconName(status) {
+      if (status === "学習済み") return "check";
+      if (status === "学習中") return "progress";
+      return "circle";
+    }
+
+    function wordRowHTML(item, compact = false) {
+      const typeLabel = itemTypeLabel(item.type);
+      const attachedExample = item.type !== "example" && item.example;
+
+      return `
+        <article class="dictionary-row" data-card-id="${escapeHTML(item.id)}">
+          <div class="dictionary-row-main">
+            <div class="dictionary-row-kicker">
+              <span class="dictionary-type">${typeLabel}</span>
+              <span class="dictionary-category">${escapeHTML(item.category || "その他")}</span>
             </div>
 
-            <p class="word-translation">${escapeHTML(item.japanese)}</p>
+            <div class="dictionary-title-line">
+              <h3 class="dictionary-word">${escapeHTML(item.word)}</h3>
+              <div class="dictionary-actions">
+                <button
+                  class="favorite-button ${item.favorite ? "active" : ""}"
+                  type="button"
+                  data-favorite-id="${escapeHTML(item.id)}"
+                  aria-label="お気に入り"
+                >${lineIconSVG("star")}</button>
+                <button
+                  class="audio-button"
+                  type="button"
+                  data-speak-id="${escapeHTML(item.id)}"
+                  aria-label="英語を読み上げる"
+                >${lineIconSVG("volume")}</button>
+                <button
+                  class="dictionary-edit-button"
+                  type="button"
+                  data-edit-id="${escapeHTML(item.id)}"
+                  aria-label="編集する"
+                >${lineIconSVG("edit")}</button>
+              </div>
+            </div>
 
-            ${item.example
-              ? `<p class="word-example">${escapeHTML(item.example)}</p>`
-              : ""
-            }
+            <p class="dictionary-meaning">${escapeHTML(item.japanese)}</p>
 
-            ${item.exampleJapanese
-              ? `<p class="word-example">${escapeHTML(item.exampleJapanese)}</p>`
-              : ""
-            }
+            ${attachedExample
+              ? `<p class="dictionary-example">${escapeHTML(item.example)}</p>`
+              : ""}
+            ${attachedExample && item.exampleJapanese
+              ? `<p class="dictionary-example-ja">${escapeHTML(item.exampleJapanese)}</p>`
+              : ""}
 
             ${compact
               ? ""
-              : `
-                <div class="word-meta">
-                  <span class="category-label">
-                    ${escapeHTML(item.category || "その他")}
-                  </span>
-
-                  <button
-                    class="status-button"
-                    type="button"
-                    data-status-id="${escapeHTML(item.id)}"
-                  >
-                    <span class="dot ${statusClass(item.status)}"></span>
-                    ${escapeHTML(item.status)}
-                  </button>
-                </div>
-              `
-            }
+              : `<button class="dictionary-status status-${statusClass(item.status)}" type="button" data-status-id="${escapeHTML(item.id)}">
+                   ${lineIconSVG(statusIconName(item.status))}${escapeHTML(item.status)}
+                 </button>`}
           </div>
-
-          <button
-            class="audio-button"
-            type="button"
-            data-speak-id="${escapeHTML(item.id)}"
-          >
-            🔊
-          </button>
         </article>
       `;
     }
 
-    function exampleCardHTML(item) {
-      const isPhrase = item.type === "phrase";
+    function exampleCardHTML(entry) {
+      const item = entry.item;
+      const isIndependent = entry.kind === "independent";
+      const english = isIndependent ? item.word : item.example;
+      const japanese = isIndependent ? item.japanese : item.exampleJapanese;
+      const related = isIndependent ? "独立した例文" : `関連：${item.word}`;
 
       return `
-        <article class="card example-card" data-example-card-id="${escapeHTML(item.id)}">
-          <div class="example-card-top">
-            <div>
-              <p class="example-english">${escapeHTML(item.example)}</p>
-              ${item.exampleJapanese
-                ? `<p class="example-japanese">${escapeHTML(item.exampleJapanese)}</p>`
-                : `<p class="example-empty-note">日本語訳はまだ登録されていません</p>`
-              }
+        <article class="dictionary-row example-dictionary-row" data-example-card-id="${escapeHTML(item.id)}">
+          <div class="dictionary-row-main">
+            <div class="dictionary-row-kicker">
+              <span class="dictionary-type">例文</span>
+              <span class="dictionary-category">${escapeHTML(item.category || "その他")}</span>
             </div>
-
-            <button class="audio-button" type="button" data-speak-example-id="${escapeHTML(item.id)}">🔊</button>
-          </div>
-
-          <div class="example-meta">
-            <span class="example-type-label ${isPhrase ? "phrase" : ""}">
-              ${isPhrase ? "フレーズ" : "単語"}
-            </span>
-            <span class="related-label">関連：${escapeHTML(item.word)}</span>
-            <span class="category-label">${escapeHTML(item.category || "その他")}</span>
+            <div class="dictionary-title-line">
+              <p class="example-english">${escapeHTML(english)}</p>
+              <button class="audio-button" type="button" data-speak-example-id="${escapeHTML(item.id)}" data-example-kind="${entry.kind}" aria-label="例文を読み上げる">${lineIconSVG("volume")}</button>
+            </div>
+            <p class="example-japanese">${escapeHTML(japanese || "日本語訳はまだ登録されていません")}</p>
+            <p class="related-label">${escapeHTML(related)}</p>
           </div>
         </article>
       `;
@@ -2882,7 +3810,9 @@
         button.addEventListener("click", (event) => {
           event.stopPropagation();
           const item = words.find((word) => word.id === button.dataset.speakExampleId);
-          if (item && item.example) speakEnglish(item.example);
+          if (!item) return;
+          const textToSpeak = button.dataset.exampleKind === "independent" ? item.word : item.example;
+          if (textToSpeak) speakEnglish(textToSpeak);
         });
       });
 
@@ -2919,6 +3849,13 @@
           if (currentView === "words") {
             renderWords();
           }
+        });
+      });
+
+      container.querySelectorAll("[data-edit-id]").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          openForm(button.dataset.editId);
         });
       });
 
@@ -2994,7 +3931,7 @@
 
       $("#total-count").textContent = words.length;
       $("#learned-count").textContent = words.filter((item) => item.status === "学習済み").length;
-      $("#example-count").textContent = words.filter((item) => item.example).length;
+      $("#example-count").textContent = words.reduce((count, item) => count + (item.type === "example" ? 1 : 0) + (item.type !== "example" && item.example ? 1 : 0), 0);
       $("#favorite-count").textContent = words.filter((item) => item.favorite).length;
 
       const dueReviewItems = getDueReviewItems();
@@ -3107,7 +4044,7 @@
       );
 
       const newestWord = [...words]
-        .filter((item) => item.type !== "phrase")
+        .filter((item) => item.type === "word")
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 1);
 
@@ -3120,7 +4057,7 @@
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
       $("#recent-list").innerHTML = recent.length
-        ? recent.map((item) => wordCardHTML(item, true)).join("")
+        ? recent.map((item) => wordRowHTML(item, true)).join("")
         : `<div class="empty-state">まだ単語やフレーズがありません</div>`;
 
       bindWordCardEvents($("#recent-list"));
@@ -3160,54 +4097,73 @@
       const keyword = $("#search-input").value.trim().toLowerCase();
       const isExampleView = activeContentFilter === "example";
 
-      const filtered = words.filter((item) => {
-        const itemType = item.type === "phrase" ? "phrase" : "word";
-        const searchableText = [
-          item.word,
-          item.japanese,
-          item.example || "",
-          item.exampleJapanese || ""
-        ].join(" ").toLowerCase();
-
-        const matchesSearch = searchableText.includes(keyword);
+      const matchesBaseFilters = (item, searchableText) => {
+        const matchesSearch = searchableText.toLowerCase().includes(keyword);
         const matchesCategory =
           activeCategory === "すべて" ||
           item.category === activeCategory ||
           (activeCategory === "未学習" && item.status === "未学習");
-
-        let matchesContent = true;
-        if (activeContentFilter === "word") matchesContent = itemType === "word";
-        if (activeContentFilter === "phrase") matchesContent = itemType === "phrase";
-        if (isExampleView) matchesContent = Boolean(item.example);
-
-        return matchesSearch && matchesCategory && matchesContent;
-      });
+        return matchesSearch && matchesCategory;
+      };
 
       $("#clear-search").classList.toggle("show", keyword.length > 0);
       $("#word-list").hidden = isExampleView;
       $("#example-list").hidden = !isExampleView;
 
       if (isExampleView) {
-        $("#list-section-title").textContent = "例文一覧";
-        $("#result-count").textContent = `${filtered.length} examples`;
-        $("#example-list").innerHTML = filtered.length
-          ? filtered.map((item) => exampleCardHTML(item)).join("")
+        const exampleEntries = [];
+
+        words.forEach((item) => {
+          if (item.type === "example") {
+            const searchableText = [item.word, item.japanese, item.category || "", item.memo || ""].join(" ");
+            if (matchesBaseFilters(item, searchableText)) {
+              exampleEntries.push({ kind: "independent", item });
+            }
+          }
+
+          if (item.type !== "example" && item.example) {
+            const searchableText = [item.example, item.exampleJapanese || "", item.word, item.japanese, item.category || ""].join(" ");
+            if (matchesBaseFilters(item, searchableText)) {
+              exampleEntries.push({ kind: "attached", item });
+            }
+          }
+        });
+
+        $("#list-section-title").textContent = "例文";
+        $("#result-count").textContent = `${exampleEntries.length} examples`;
+        $("#example-list").innerHTML = exampleEntries.length
+          ? exampleEntries.map((entry) => exampleCardHTML(entry)).join("")
           : `<div class="empty-state">条件に一致する例文がありません</div>`;
         bindExampleCardEvents($("#example-list"));
         return;
       }
 
+      const filtered = words.filter((item) => {
+        if (activeContentFilter === "word" && item.type !== "word") return false;
+        if (activeContentFilter === "phrase" && item.type !== "phrase") return false;
+
+        const searchableText = [
+          item.word,
+          item.japanese,
+          item.example || "",
+          item.exampleJapanese || "",
+          item.memo || ""
+        ].join(" ");
+
+        return matchesBaseFilters(item, searchableText);
+      });
+
       $("#list-section-title").textContent =
         activeContentFilter === "word"
-          ? "単語一覧"
+          ? "単語"
           : activeContentFilter === "phrase"
-            ? "フレーズ一覧"
-            : "単語・フレーズ一覧";
+            ? "フレーズ"
+            : "登録項目";
 
       $("#result-count").textContent = `${filtered.length} items`;
       $("#word-list").innerHTML = filtered.length
-        ? filtered.map((item) => wordCardHTML(item)).join("")
-        : `<div class="empty-state">条件に一致する単語・フレーズがありません</div>`;
+        ? filtered.map((item) => wordRowHTML(item)).join("")
+        : `<div class="empty-state">条件に一致する項目がありません</div>`;
       bindWordCardEvents($("#word-list"));
     }
 
@@ -3233,7 +4189,8 @@
 
     function updateFormTypeText() {
       const isPhrase = formType === "phrase";
-      const itemName = isPhrase ? "フレーズ" : "単語";
+      const isExample = formType === "example";
+      const itemName = isPhrase ? "フレーズ" : isExample ? "例文" : "単語";
 
       $("#form-title").textContent =
         `${editingId ? itemName + "を編集" : itemName + "を追加"} 🌿`;
@@ -3244,16 +4201,19 @@
           : `新しい${itemName}を登録しよう`;
 
       $("#english-field-label").innerHTML =
-        `${isPhrase ? "英語フレーズ" : "英単語"} <span class="required">＊必須</span>`;
+        `${isPhrase ? "英語フレーズ" : isExample ? "英語の例文" : "英単語"} <span class="required">＊必須</span>`;
 
       $("#japanese-field-label").innerHTML =
-        `${isPhrase ? "フレーズの意味" : "日本語訳"} <span class="required">＊必須</span>`;
+        `${isPhrase ? "フレーズの意味" : isExample ? "例文の日本語訳" : "日本語訳"} <span class="required">＊必須</span>`;
 
       $("#example-field-label").innerHTML =
         `${isPhrase ? "使用例" : "英語の例文"} <span class="optional">任意</span>`;
 
       $("#example-japanese-field-label").innerHTML =
         `${isPhrase ? "使用例の日本語訳" : "例文の日本語訳"} <span class="optional">任意</span>`;
+
+      $("#attached-example-group").hidden = isExample;
+      $("#attached-example-japanese-group").hidden = isExample;
     }
 
     function renderFormReviewSchedule(item) {
@@ -3355,7 +4315,7 @@
         $("#category-input").value = item.category || "その他";
         $("#memo-input").value = item.memo || "";
 
-        formType = item.type === "phrase" ? "phrase" : "word";
+        formType = ["word", "phrase", "example"].includes(item.type) ? item.type : "word";
         formStatusMode = item.statusMode === "auto" ? "auto" : "manual";
         formStatus = item.status;
         formFavorite = item.favorite;
@@ -3680,34 +4640,44 @@
     }
 
 
+    function getReorderSentence(item) {
+      return item.type === "example"
+        ? item.word
+        : item.example;
+    }
+
     function getReorderQuizPool() {
       return words.filter((item) => {
-        const itemType =
-          item.type === "phrase"
-            ? "phrase"
-            : "word";
+        const itemType = ["word", "phrase", "example"].includes(item.type)
+          ? item.type
+          : "word";
 
         const matchesTarget =
           quizTarget === "all" ||
           itemType === quizTarget;
 
+        const sentence = getReorderSentence(item);
+
         if (
           !matchesTarget ||
           !isInActiveQuizSource(item) ||
-          !item.example
+          !sentence
         ) {
           return false;
         }
 
-        return tokenizeSentence(
-          item.example
-        ).length >= 3;
+        return tokenizeSentence(sentence).length >= 3;
       });
     }
 
 
     function getBlankQuizPool() {
       return words.filter((item) => {
+        // Independent Example は穴埋め対象外。
+        if (item.type === "example") {
+          return false;
+        }
+
         const itemType = item.type === "phrase" ? "phrase" : "word";
         const matchesTarget =
           quizTarget === "all" ||
@@ -3728,10 +4698,9 @@
 
     function getQuizPool() {
       return words.filter((item) => {
-        const itemType =
-          item.type === "phrase"
-            ? "phrase"
-            : "word";
+        const itemType = ["word", "phrase", "example"].includes(item.type)
+          ? item.type
+          : "word";
 
         const matchesTarget =
           quizTarget === "all" ||
@@ -3809,20 +4778,20 @@
       if (quizMode === "blank") {
         canStart = pool.length >= 1;
         $("#quiz-help-text").textContent =
-          "例文の空欄に入る単語・フレーズを入力します。1回5問です。";
+          "例文の空欄に入る単語・フレーズを入力します。最大5問、同じ問題は重複しません。";
         $("#quiz-start-label").textContent = "穴埋めQuizを始める";
         $("#quiz-availability").textContent =
           canStart
-            ? `${pool.length}件の例文から5問を出題します`
+            ? `${pool.length}件の対象から${Math.min(pool.length, QUIZ_QUESTION_COUNT)}問を出題します`
             : "対象の単語・フレーズが例文内に含まれるデータが必要です";
       } else if (quizMode === "reorder") {
         canStart = pool.length >= 1;
         $("#quiz-help-text").textContent =
-          "ばらばらの語句を正しい順番に並べます。日本語訳をヒントに、1回5問です。";
+          "ばらばらの語句を正しい順番に並べます。日本語訳をヒントに、最大5問です。";
         $("#quiz-start-label").textContent = "並べ替えQuizを始める";
         $("#quiz-availability").textContent =
           canStart
-            ? `${pool.length}件の例文から5問を出題します`
+            ? `${pool.length}件の対象から${Math.min(pool.length, QUIZ_QUESTION_COUNT)}問を出題します`
             : "3語以上の英語例文が登録されたデータが必要です";
       } else {
         const uniqueMeaningCount = getUniqueMeaningCount(pool);
@@ -3831,11 +4800,11 @@
           uniqueMeaningCount >= QUIZ_CHOICE_COUNT;
 
         $("#quiz-help-text").textContent =
-          "英語を見て、日本語の意味を4つの選択肢から選びます。1回5問です。";
+          "英語を見て、日本語の意味を4つの選択肢から選びます。最大5問、同じ問題は重複しません。";
         $("#quiz-start-label").textContent = "4択Quizを始める";
         $("#quiz-availability").textContent =
           canStart
-            ? `${pool.length}件から5問を出題します`
+            ? `${pool.length}件から${Math.min(pool.length, QUIZ_QUESTION_COUNT)}問を出題します`
             : "4択Quizには、異なる日本語訳を持つデータが4件以上必要です";
       }
 
@@ -3856,25 +4825,9 @@
     }
 
     function buildQuizQuestions() {
-      const pool =
-        getQuizPool();
-
-      const shuffledPool =
-        shuffleArray(pool);
-
-      const selectedQuestions = [];
-
-      for (
-        let index = 0;
-        index < QUIZ_QUESTION_COUNT;
-        index += 1
-      ) {
-        selectedQuestions.push(
-          shuffledPool[
-            index % shuffledPool.length
-          ]
-        );
-      }
+      const pool = getQuizPool();
+      const selectedQuestions = shuffleArray(pool)
+        .slice(0, QUIZ_QUESTION_COUNT);
 
       return selectedQuestions.map(
         (correctItem) => {
@@ -3920,24 +4873,22 @@
 
 
     function buildBlankQuizQuestions() {
-      return shuffleArray(getBlankQuizPool()).map((item) => ({
-        item,
-        blankSentence: createBlankSentence(item.example, item.word)
-      }));
+      return shuffleArray(getBlankQuizPool())
+        .slice(0, QUIZ_QUESTION_COUNT)
+        .map((item) => ({
+          item,
+          blankSentence: createBlankSentence(item.example, item.word)
+        }));
     }
 
     function buildReorderQuizQuestions() {
-      return shuffleArray(
-        getReorderQuizPool()
-      ).map(
-        (item) => ({
+      return shuffleArray(getReorderQuizPool())
+        .slice(0, QUIZ_QUESTION_COUNT)
+        .map((item) => ({
           item,
-          correctTokens:
-            tokenizeSentence(
-              item.example
-            )
-        })
-      );
+          sentence: getReorderSentence(item),
+          correctTokens: tokenizeSentence(getReorderSentence(item))
+        }));
     }
 
 
@@ -4020,6 +4971,7 @@
       const question = quizQuestions[quizQuestionIndex];
       const item = question.item;
       const isPhrase = item.type === "phrase";
+      const isExample = item.type === "example";
       const isBlankMode = quizMode === "blank";
       const isReorderMode = quizMode === "reorder";
 
@@ -4035,8 +4987,10 @@
       $("#quiz-progress-bar").style.width =
         `${((quizQuestionIndex + 1) / quizQuestions.length) * 100}%`;
 
-      $("#quiz-type-badge").textContent = isPhrase ? "フレーズ" : "単語";
+      $("#quiz-type-badge").textContent =
+        isExample ? "例文" : isPhrase ? "フレーズ" : "単語";
       $("#quiz-type-badge").classList.toggle("phrase", isPhrase);
+      $("#quiz-type-badge").classList.toggle("example", isExample);
 
       $("#quiz-word").textContent =
         isBlankMode
@@ -4120,9 +5074,11 @@
         );
 
       $("#reorder-hint").textContent =
-        question.item.exampleJapanese
-          ? `ヒント：${question.item.exampleJapanese}`
-          : `関連：${question.item.word}（${question.item.japanese}）`;
+        question.item.type === "example"
+          ? `ヒント：${question.item.japanese}`
+          : question.item.exampleJapanese
+            ? `ヒント：${question.item.exampleJapanese}`
+            : `関連：${question.item.word}（${question.item.japanese}）`;
 
       $("#reorder-answer-box").classList.remove(
         "correct",
@@ -4260,8 +5216,7 @@
           .map((token) => token.text)
           .join(" ");
 
-      const correctSentence =
-        question.item.example;
+      const correctSentence = question.sentence;
 
       const isCorrect =
         normalizeSentence(userSentence) ===
@@ -4604,7 +5559,7 @@
 
       return {
         id: createId(),
-        type: importedType === "phrase" ? "phrase" : "word",
+        type: ["word", "phrase", "example"].includes(importedType) ? importedType : "word",
         word: String(record.word || "").trim(),
         japanese: String(record.japanese || "").trim(),
         example: String(record.example || "").trim(),
@@ -4698,13 +5653,13 @@
     ========================================================== */
     function renderDataSummary() {
       $("#data-word-count").textContent =
-        words.filter((item) => item.type !== "phrase").length;
+        words.filter((item) => item.type === "word").length;
 
       $("#data-phrase-count").textContent =
         words.filter((item) => item.type === "phrase").length;
 
       $("#data-example-count").textContent =
-        words.filter((item) => item.example).length;
+        words.reduce((count, item) => count + (item.type === "example" ? 1 : 0) + (item.type !== "example" && item.example ? 1 : 0), 0);
 
       $("#data-answer-count").textContent =
         words.reduce(
@@ -4721,7 +5676,7 @@
 
       importedWords.forEach((importedItem) => {
         const existingIndex = merged.findIndex((item) =>
-          (item.type === "phrase" ? "phrase" : "word") === importedItem.type &&
+          ( ["word", "phrase", "example"].includes(item.type) ? item.type : "word" ) === importedItem.type &&
           item.word.trim().toLowerCase() === importedItem.word.trim().toLowerCase()
         );
 
@@ -4782,7 +5737,11 @@
         $("#search-input").placeholder =
           activeContentFilter === "example"
             ? "例文を検索"
-            : "単語・フレーズを検索";
+            : activeContentFilter === "word"
+              ? "単語を検索"
+              : activeContentFilter === "phrase"
+                ? "フレーズを検索"
+                : "単語・フレーズ・例文を検索";
 
         renderWords();
       });
@@ -4892,10 +5851,11 @@
 
           if (question) {
             speakEnglish(
-              quizMode === "blank" ||
-              quizMode === "reorder"
+              quizMode === "blank"
                 ? question.item.example
-                : question.item.word
+                : quizMode === "reorder"
+                  ? getReorderSentence(question.item)
+                  : question.item.word
             );
           }
         }
@@ -4971,7 +5931,7 @@
       const japanese = $("#japanese-input").value.trim();
 
       if (!word || !japanese) {
-        showToast(`${formType === "phrase" ? "英語フレーズと意味" : "英単語と日本語訳"}を入力してください`);
+        showToast(`${formType === "phrase" ? "英語フレーズと意味" : formType === "example" ? "英語の例文と日本語訳" : "英単語と日本語訳"}を入力してください`);
         return;
       }
 
@@ -4982,8 +5942,8 @@
         type: formType,
         word,
         japanese,
-        example: $("#example-input").value.trim(),
-        exampleJapanese: $("#example-japanese-input").value.trim(),
+        example: formType === "example" ? "" : $("#example-input").value.trim(),
+        exampleJapanese: formType === "example" ? "" : $("#example-japanese-input").value.trim(),
         category: $("#category-input").value,
         statusMode: formStatusMode,
         status: formStatus,
@@ -5018,10 +5978,10 @@
       if (editingId) {
         const index = words.findIndex((entry) => entry.id === editingId);
         words[index] = item;
-        showToast(`${formType === "phrase" ? "フレーズ" : "単語"}の変更を保存しました`);
+        showToast(`${itemTypeLabel(formType)}の変更を保存しました`);
       } else {
         words.push(item);
-        showToast(`${formType === "phrase" ? "フレーズ" : "単語"}を追加しました`);
+        showToast(`${itemTypeLabel(formType)}を追加しました`);
       }
 
       saveWords();
@@ -5036,13 +5996,13 @@
 
       words = words.filter((entry) => entry.id !== editingId);
       saveWords();
-      showToast("単語を削除しました");
+      showToast(`${itemTypeLabel(item.type)}を削除しました`);
       showView("words");
     });
 
     $("#export-csv-button").addEventListener("click", () => {
       if (words.length === 0) {
-        showToast("書き出す単語がありません");
+        showToast("書き出す項目がありません");
         return;
       }
 
@@ -5092,6 +6052,24 @@
           nextReviewAt: "",
           studyHistory: [],
           memo: "フレーズの入力例"
+        },
+        {
+          type: "example",
+          word: "I spent my childhood running around in nature.",
+          japanese: "私は自然の中を駆け回って子供時代を過ごしました。",
+          example: "",
+          exampleJapanese: "",
+          category: "英会話",
+          statusMode: "manual",
+          status: "未学習",
+          favorite: false,
+          correctCount: 0,
+          incorrectCount: 0,
+          lastStudiedAt: "",
+          reviewLevel: 0,
+          nextReviewAt: "",
+          studyHistory: [],
+          memo: "独立した例文の入力例"
         }
       ];
 
@@ -5116,7 +6094,7 @@
         const importedWords = csvToWords(text);
 
         if (importedWords.length === 0) {
-          showToast("読み込める単語がありません");
+          showToast("読み込める項目がありません");
           return;
         }
 
@@ -5162,7 +6140,7 @@
       words = [];
       saveWords();
       renderDataSummary();
-      showToast("すべての単語とフレーズを削除しました");
+      showToast("すべての単語・フレーズ・例文を削除しました");
     });
 
     /* =========================================================
@@ -5178,7 +6156,7 @@
             ? "Good afternoon"
             : "Good evening";
 
-      $("#greeting").textContent = `${greeting}, Mai 🌿`;
+      $("#greeting").textContent = `${greeting}, Mai`;
     }
 
     words = loadWords();
